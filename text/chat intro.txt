@@ -1,0 +1,20 @@
+Introduction
+We are starting a new project Care6. 
+The aim of this project is to setup and manage a postgreSQL database 
+hosted on the Google Cloud.
+
+The datebase is already set up. 
+We need to create a Factory introducing Blueprint
+
+Under the /app directory we have following directories with functionality:
+db_connection = connction to the postgreSQL
+db_creation = creating db schema, tables, cloumns
+login = login functions
+data_input = get data from input forms
+data output = fetchin and displaying data from database
+admin = access, correction, extending database, etc functions
+
+pls advise step by step proccess. if possible in small steps that I can catch up. Thanks
+
+
+ 
