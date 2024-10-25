@@ -27,10 +27,12 @@ def create_app():
     init_db_connection(app)
 
     # Register Blueprints
+    from app.routes import routes_bp
     app.register_blueprint(auth_bp)
     app.register_blueprint(input_bp)
     app.register_blueprint(output_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(main_bp)
+    app.register_blueprint(routes_bp)
 
     return app
