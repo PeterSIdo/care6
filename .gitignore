@@ -1,3 +1,6 @@
+.text/
+.utility/
+
 # IDE config
 .idea/
 
