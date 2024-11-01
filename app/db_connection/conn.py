@@ -1,38 +1,22 @@
-# app/db_connection/conn.py
-
+# db_connection/conn.py
 import psycopg2
-from flask import current_app, g, Flask
+from config import Config
 
 
-def init_db_connection(app: Flask):
-    @app.before_request
-    def before_request():
-        try:
-            g.db = psycopg2.connect(
-                dbname=current_app.config['DB_NAME'],
-                user=current_app.config['DB_USER'],
-                password=current_app.config['DB_PASS'],
-                host=current_app.config['DB_HOST'],
-                port=current_app.config['DB_PORT']
-            )
-        except psycopg2.OperationalError as e:
-            app.logger.error(f"Database connection failed: {e}")
-            # Handle connection error gracefully
-            g.db = None
-
-    @app.teardown_request
-    def teardown_request(exception):
-        db = g.pop('db', None)
-        if db is not None:
-            db.close()
+def get_connection():
+    try:
+        connection = psycopg2.connect(
+            dbname=Config.DB_NAME,
+            user=Config.DB_USER,
+            password=Config.DB_PASS,
+            host=Config.DB_HOST,
+            port=Config.DB_PORT
+        )
+        return connection
+    except Exception as e:
+        print(f"Unable to connect to the database: {e}")
+        return None
 
 
-# Assuming you have an app instance somewhere:
-app = Flask(__name__)
-app.config['DB_NAME'] = 'care6'
-app.config['DB_USER'] = 'postgres'
-app.config['DB_PASS'] = 'jelszo'
-app.config['DB_HOST'] = '34.89.97.10'
-app.config['DB_PORT'] = 5432
-
-init_db_connection(app)
+def init_db_connection(app):
+    app.config['db_connection'] = get_connection()
